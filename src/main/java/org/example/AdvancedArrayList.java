@@ -8,8 +8,10 @@ import java.util.Comparator;
  * Advanced realization of ArrayList with merge sorting.
  */
 public class AdvancedArrayList<T> extends AbstractList<T> {
+    public static final String INVALID_AGRUMENT_MSG = "Invalid agrument";
     private int size = 0;
     private static final int CAPACITY = 16;
+    private static final String  MSG = "Index: %d, Size %d";
     private Object[] elements;
 
     public AdvancedArrayList() {
@@ -28,7 +30,9 @@ public class AdvancedArrayList<T> extends AbstractList<T> {
      */
     @Override
     public boolean add(T element) {
-        if((size > 0)&&(size == elements.length)) increaseCapacity();
+        if((size > 0) && (size == elements.length)) { // скобки улучшают читаемость, не забывай про них
+            increaseCapacity();
+        }
         elements[size] = element;
         size++;
         return true;
@@ -45,7 +49,7 @@ public class AdvancedArrayList<T> extends AbstractList<T> {
     @Override
     public void add(int index, T element) {
         if (index > size || index < 0) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size " + index);
+            throw new IndexOutOfBoundsException(String.format(MSG, index, size)); // так лучше
         }
         if((size > 0)&&(size == elements.length)) increaseCapacity();
         for (int i = size - 1; i >= index; i--) {
@@ -118,7 +122,7 @@ public class AdvancedArrayList<T> extends AbstractList<T> {
     @Override
     public boolean remove(Object o) {
         if (o == null) {
-            throw new NullPointerException("Invalid agrument");
+            throw new NullPointerException(INVALID_AGRUMENT_MSG);
         }
         for (int i = 0; i < size; i++) {
             if((o).equals(elements[i])){
